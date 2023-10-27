@@ -8,7 +8,7 @@ import * as L from 'leaflet';
 })
 export class FolderPage {
   map!: L.Map;
-  searchInput: string = ''; // Variável para armazenar o valor inserido no campo de pesquisa
+  searchInput: string = ''; 
 
   constructor() {}
 
@@ -26,9 +26,17 @@ export class FolderPage {
     setTimeout(() => {
       this.map.invalidateSize();
     }, 0);
-
+  
     this.setupGeolocation();
+
+    
+
   }
+  
+
+  
+
+  
 
   setupGeolocation() {
     if ('geolocation' in navigator) {
@@ -73,8 +81,7 @@ export class FolderPage {
   }
 
   searchLocation() {
-    // Use um serviço de geocodificação para obter as coordenadas do local inserido
-    // Aqui, você pode usar o serviço Nominatim da OpenStreetMap como exemplo
+   
     const searchUrl = `https://nominatim.openstreetmap.org/search?format=json&q=${this.searchInput}`;
 
     fetch(searchUrl)
@@ -101,4 +108,6 @@ export class FolderPage {
       .bindPopup('Local Pesquisado')
       .openPopup();
   }
-}
+
+ 
+  }
