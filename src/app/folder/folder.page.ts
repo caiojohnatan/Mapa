@@ -9,6 +9,8 @@ import * as L from 'leaflet';
 export class FolderPage {
   map!: L.Map;
   searchInput: string = ''; 
+  latitude: number = 0; // Variável para armazenar a latitude
+  longitude: number = 0; 
 
   constructor() {}
 
@@ -54,7 +56,8 @@ export class FolderPage {
   }
 
   success(pos: GeolocationPosition) {
-    console.log(pos.coords.latitude, pos.coords.longitude);
+    this.latitude = pos.coords.latitude; // Armazena a latitude na variável de classe
+    this.longitude = pos.coords.longitude; //
 
     if (this.map) {
       this.map.remove();
@@ -108,6 +111,15 @@ export class FolderPage {
       .bindPopup('Local Pesquisado')
       .openPopup();
   }
+
+  updateMapLocation2(latitude: number, longitude: number) {
+    this.map.setView([latitude, longitude], 13);
+    L.marker([latitude, longitude])
+      .addTo(this.map)
+      .bindPopup('Eu estou aqui!')
+      .openPopup();
+  }
+
 
  
   }
