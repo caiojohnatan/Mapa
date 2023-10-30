@@ -5,43 +5,29 @@
 </ion-toolbar>
 
 <ion-content>
+  <ion-button (click)="updateMapLocation(this.latitude, this.longitude)">Recentralizar Mapa</ion-button>
   <div id="map" style=""></div>
 </ion-content>
-<ion-button (click)="updateMapLocation2(latitude, longitude)">Atualizar Localização</ion-button>
-<ion-footer class="footer" >
-     
+<ion-button (click)="updateMapLocation(this.latitude, this.longitude)">Recentralizar Mapa</ion-button>
+<ion-footer class="footer">
   <ion-tabs class="footer">
     <ion-tab-bar class="tabBar" color="dark" slot="bottom">
-
-      <ion-tab-button  tab="menu">
+      <ion-tab-button tab="menu">
         <ion-menu-button color="medium" class="button"></ion-menu-button>
-        <ion-text>
-          Menu</ion-text>
-      
+        <ion-text>Menu</ion-text>
       </ion-tab-button>
-     
       <ion-tab-button class="border" tab="home">
         <ion-icon class="button" color="medium" name="home"></ion-icon>
-        <ion-text >
-        Início</ion-text>
+        <ion-text>Início</ion-text>
       </ion-tab-button>
       <ion-tab-button color="warning" tab="radio">
         <ion-icon color="medium" class="button" name="heart"></ion-icon>
-        <ion-text >
-          Favoritos</ion-text>
-     
+        <ion-text>Favoritos</ion-text>
       </ion-tab-button>
-      <ion-tab-button  tab="library">
-        <ion-icon color="medium"  class="button" name="map"></ion-icon>
-        <ion-text >
-          Mapa</ion-text>
-   
+      <ion-tab-button tab="library">
+        <ion-icon color="medium" class="button" name="map"></ion-icon>
+        <ion-text>Mapa</ion-text>
       </ion-tab-button>
-    
-      
-
-     
     </ion-tab-bar>
   </ion-tabs>
-
 </ion-footer>
