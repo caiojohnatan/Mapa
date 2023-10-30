@@ -8,9 +8,10 @@ import * as L from 'leaflet';
 })
 export class FolderPage {
   map!: L.Map;
-  searchInput: string = ''; 
-  latitude: number = 0; // Variável para armazenar a latitude
-  longitude: number = 0; 
+  searchInput: string = '';
+  latitude: number = 0;
+  longitude: number = 0;
+  marker: L.Marker | null = null;
 
   constructor() {}
 
@@ -28,17 +29,9 @@ export class FolderPage {
     setTimeout(() => {
       this.map.invalidateSize();
     }, 0);
-  
+
     this.setupGeolocation();
-
-    
-
   }
-  
-
-  
-
-  
 
   setupGeolocation() {
     if ('geolocation' in navigator) {
@@ -56,8 +49,8 @@ export class FolderPage {
   }
 
   success(pos: GeolocationPosition) {
-    this.latitude = pos.coords.latitude; // Armazena a latitude na variável de classe
-    this.longitude = pos.coords.longitude; //
+    this.latitude = pos.coords.latitude;
+    this.longitude = pos.coords.longitude;
 
     if (this.map) {
       this.map.remove();
@@ -73,7 +66,7 @@ export class FolderPage {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     }).addTo(this.map);
 
-    L.marker([pos.coords.latitude, pos.coords.longitude])
+    this.marker = L.marker([pos.coords.latitude, pos.coords.longitude])
       .addTo(this.map)
       .bindPopup('Eu estou aqui!')
       .openPopup();
@@ -84,7 +77,6 @@ export class FolderPage {
   }
 
   searchLocation() {
-   
     const searchUrl = `https://nominatim.openstreetmap.org/search?format=json&q=${this.searchInput}`;
 
     fetch(searchUrl)
@@ -105,21 +97,13 @@ export class FolderPage {
   }
 
   updateMapLocation(latitude: number, longitude: number) {
+    if (this.marker) {
+      this.map.removeLayer(this.marker);
+    }
     this.map.setView([latitude, longitude], 13);
-    L.marker([latitude, longitude])
+    this.marker = L.marker([latitude, longitude])
       .addTo(this.map)
       .bindPopup('Local Pesquisado')
       .openPopup();
   }
-
-  updateMapLocation2(latitude: number, longitude: number) {
-    this.map.setView([latitude, longitude], 13);
-    L.marker([latitude, longitude])
-      .addTo(this.map)
-      .bindPopup('Eu estou aqui!')
-      .openPopup();
-  }
-
-
- 
-  }
+}
