@@ -12,6 +12,8 @@ export class FolderPage {
   latitude: number = 0;
   longitude: number = 0;
   marker: L.Marker | null = null;
+  localName: string = ''; 
+  postalCode: string = ''; 
 
   constructor() {}
 
@@ -87,6 +89,9 @@ export class FolderPage {
           const latitude = parseFloat(result.lat);
           const longitude = parseFloat(result.lon);
           this.updateMapLocation(latitude, longitude);
+
+          // Adicione o código para obter informações do local aqui
+          this.getReverseGeocode(latitude, longitude);
         } else {
           console.log('Local não encontrado');
         }
@@ -105,5 +110,23 @@ export class FolderPage {
       .addTo(this.map)
       .bindPopup('Local Pesquisado')
       .openPopup();
+  }
+
+  getReverseGeocode(latitude: number, longitude: number) {
+    const reverseGeocodeUrl = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&zoom=18&addressdetails=1`;
+
+    fetch(reverseGeocodeUrl)
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.address) {
+          this.localName = data.display_name;
+          this.postalCode = data.address.postcode;
+        } else {
+          console.log('Informações detalhadas do local não encontradas');
+        }
+      })
+      .catch((error) => {
+        console.error('Erro ao buscar informações detalhadas do local:', error);
+      });
   }
 }
