@@ -1,14 +1,28 @@
-<ion-toolbar>
-  <ion-buttons>
-    <ion-searchbar class="pesquisa" animated="true" color="medium" placeholder="Pesquisar" [(ngModel)]="searchInput" (ionChange)="searchLocation()"></ion-searchbar>
-  </ion-buttons>
-</ion-toolbar>
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons>
+      <ion-searchbar class="pesquisa" animated="true" color="medium" placeholder="Pesquisar" [(ngModel)]="searchInput" (ionChange)="searchLocation()"></ion-searchbar>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
 
 <ion-content>
-  <ion-button (click)="updateMapLocation(this.latitude, this.longitude)">Recentralizar Mapa</ion-button>
+
   <div id="map" style=""></div>
+  
+  <ion-card *ngIf="localName && postalCode">
+    <ion-card-header>
+      {{ localName }}
+    </ion-card-header>
+    <ion-card-content>
+      <p>Nome do Local: {{ localName }}</p>
+      <p>CEP: {{ postalCode }}</p>
+    </ion-card-content>
+  </ion-card>
 </ion-content>
+
 <ion-button (click)="updateMapLocation(this.latitude, this.longitude)">Recentralizar Mapa</ion-button>
+
 <ion-footer class="footer">
   <ion-tabs class="footer">
     <ion-tab-bar class="tabBar" color="dark" slot="bottom">
